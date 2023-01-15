@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ink Contract Validator</title>
+    <style>
+        #result {
+            color: green;
+        }
+
+        #result.invalid {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ink Contract Validator</h1>
+    <form>
+        <label for="file-input">Choose a compiled contract:</label>
+        <input type="file" id="file-input" value="选择合约WASM文件" onchange="validateFile()" />
+        <br>
+        <label for="allow-indeterministic">Allow indeterministic:</label>
+        <input type="checkbox" id="allow-indeterministic" onchange="validateFile()" />
+    </form>
+
+    <div id="result"></div>
+
+    <script src="./index.js"></script>
+    <script>
+        window.validateFile = function () {
+            const file = document.getElementById('file-input').files[0];
+            const allowIndeterministic = document.getElementById("allow-indeterministic").checked;
+            const resultDiv = document.getElementById('result');
+            if (!file) {
+                resultDiv.innerHTML = '';
+                return;
+            }
+            const isWasm = file.name.endsWith('.wasm');
+            const isContract = file.name.endsWith('.contract');
+            if (!(isWasm || isContract)) {
+                resultDiv.innerHTML = '<p>Invalid file type. Only .wasm or .contract files are allowed.</p>';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function () {
+                let wasmCode;
+                if (isContract) {
+                    const contract = JSON.parse(reader.result);
+                    wasmCode = contract.source.wasm;
+                } else {
+                    wasmCode = new Uint8Array(reader.result);
+                }
+                const result = validateInk(wasmCode, allowIndeterministic);
+                if (result) {
+                    resultDiv.innerHTML = '<p>The contract is Invalid<br> ' + result + '</p>';
+                    resultDiv.classList.add("invalid");
+                } else {
+                    resultDiv.innerHTML = '<p>The contract is Valid</p>';
+                    resultDiv.classList.remove("invalid");
+                }
+            }
+            if (isWasm) {
+                reader.readAsArrayBuffer(file);
+            } else if (isContract) {
+                reader.readAsText(file);
+            }
+        }
+    </script>
+</body>
+
+</html>
