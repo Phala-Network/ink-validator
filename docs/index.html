@@ -18,7 +18,7 @@
     <h1>Ink Contract Validator</h1>
     <form>
         <label for="file-input">Choose a compiled contract:</label>
-        <input type="file" id="file-input" value="选择合约WASM文件" onchange="validateFile()" />
+        <input type="file" id="file-input" onchange="validateFile()" />
         <br>
         <label for="allow-indeterministic">Allow indeterministic:</label>
         <input type="checkbox" id="allow-indeterministic" onchange="validateFile()" />
