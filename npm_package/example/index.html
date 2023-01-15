@@ -12,21 +12,30 @@
             color: red;
         }
     </style>
+    <script>
+        window.onload = function () {
+            document.getElementById("op-panel").style.display = "block";
+            document.getElementById("loading").style.display = "none";
+        };
+    </script>
 </head>
 
 <body>
-    <h1>Ink Contract Validator</h1>
-    <form>
-        <label for="file-input">Choose a compiled contract:</label>
-        <input type="file" id="file-input" onchange="validateFile()" />
-        <br>
-        <label for="allow-indeterminism">Allow indeterminism:</label>
-        <input type="checkbox" id="allow-indeterminism" onchange="validateFile()" />
-    </form>
+    <div id="loading">Loading...</div>
+    <div id="op-panel" style="display: none;">
+        <h1>Ink Contract Validator</h1>
+        <form>
+            <label for="file-input">Choose a compiled contract:</label>
+            <input type="file" id="file-input" onchange="validateFile()" />
+            <br>
+            <label for="allow-indeterminism">Allow indeterminism:</label>
+            <input type="checkbox" id="allow-indeterminism" onchange="validateFile()" />
+        </form>
+    </div>
 
     <div id="result"></div>
 
-    <script src="./index.js"></script>
+    <script src="./validator.js"></script>
     <script>
         window.validateFile = function () {
             const file = document.getElementById('file-input').files[0];

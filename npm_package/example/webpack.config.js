@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   // mode: 'development',
   output: {
-    filename: 'index.js',
+    filename: 'validator.js',
     path: path.resolve(__dirname, 'dist'),
     // module: true,
     // chunkFormat: "module",
