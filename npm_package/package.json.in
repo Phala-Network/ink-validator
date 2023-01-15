@@ -1,0 +1,15 @@
+{
+  "name": "@kvinwang/ink-validator",
+  "collaborators": [
+    "Kevin Wang <wy721@qq.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "browser",
+    "nodejs"
+  ],
+  "main": "nodejs/index.js",
+  "browser": "browser/index.js",
+  "types": "browser/index.d.ts",
+  "sideEffects": false
+}
