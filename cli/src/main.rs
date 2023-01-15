@@ -23,7 +23,14 @@ struct Args {
 }
 
 fn load_wasm_bin(file: &str) -> Vec<u8> {
-    if file.ends_with(".wasm") {
+    use std::io::Read;
+    if file == "-" {
+        std::io::stdin()
+            .lock()
+            .bytes()
+            .collect::<Result<_, _>>()
+            .expect("Failed to read wasm from stdin")
+    } else if file.ends_with(".wasm") {
         std::fs::read(file).expect("Failed to read wasm file")
     } else if file.ends_with(".contract") {
         let json = std::fs::read_to_string(file).expect("Failed to read contract file");
