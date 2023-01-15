@@ -2,10 +2,11 @@
 //! wasm module before execution. It also extracts some essential information
 //! from a module.
 
-use alloc::vec::Vec;
+use alloc::{string::String, vec::Vec};
 
 use anyhow::{anyhow, bail, Result};
 use core::fmt::Display;
+use std::sync::Mutex;
 use wasm_instrument::{
     gas_metering,
     parity_wasm::elements::{self, External, Internal, MemoryType, Type, ValueType},
@@ -403,6 +404,8 @@ impl Schedule {
     }
 }
 
+static LAST_ERROR: Mutex<Option<String>> = Mutex::new(None);
+
 struct ScheduleRules<'a> {
     schedule: &'a Schedule,
     params: Vec<u32>,
@@ -486,7 +489,11 @@ impl<'a> gas_metering::Rules for ScheduleRules<'a> {
             I32Rotl | I64Rotl => w.i64rotl,
             I32Rotr | I64Rotr => w.i64rotr,
             _ if !self.deterministic && w.fallback > 0 => w.fallback,
-            _ => return None,
+            _ => {
+                *LAST_ERROR.lock().unwrap() =
+                    Some(alloc::format!("unsupported instruction: {:?}", instruction));
+                return None;
+            }
         };
         Some(weight)
     }
@@ -673,9 +680,14 @@ impl<'a> ContractModule<'a> {
     fn inject_gas_metering(self, deterministic: bool) -> Result<Self> {
         let gas_rules = self.schedule.rules(&self.module, deterministic);
         let backend = gas_metering::host_function::Injector::new("seal0", "gas");
-        // TODO
-        let contract_module = gas_metering::inject(self.module, backend, &gas_rules)
-            .map_err(|_| anyhow!("gas instrumentation failed"))?;
+        let contract_module =
+            gas_metering::inject(self.module, backend, &gas_rules).map_err(|_| {
+                let base = "gas instrumentation failed";
+                match LAST_ERROR.lock().unwrap().take() {
+                    Some(err) => anyhow!("{base}: {err}"),
+                    None => anyhow!("{base}"),
+                }
+            })?;
         Ok(ContractModule {
             module: contract_module,
             schedule: self.schedule,
