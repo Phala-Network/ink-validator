@@ -6,8 +6,8 @@
   "browser": "web.js",
   "scripts": {
     "test": "node node.js",
-    "build-web": "webpack build --target web",
-    "serve": "http-server"
+    "build-web": "webpack build --target web && cp index.html dist/",
+    "serve": "cd dist && http-server"
   },
   "author": "",
   "license": "ISC",

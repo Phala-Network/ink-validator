@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Ink Contract Validator</title>
     <style>
         #result {
             color: green;
         }
+
         #result.invalid {
             color: red;
         }
     </style>
 </head>
+
 <body>
     <h1>Ink Contract Validator</h1>
     <form>
@@ -23,7 +26,7 @@
 
     <div id="result"></div>
 
-    <script src="./dist/index.js"></script>
+    <script src="./index.js"></script>
     <script>
         window.validateFile = function () {
             const file = document.getElementById('file-input').files[0];
@@ -40,7 +43,7 @@
                 return;
             }
             const reader = new FileReader();
-            reader.onload = function() {
+            reader.onload = function () {
                 let wasmCode;
                 if (isContract) {
                     const contract = JSON.parse(reader.result);
@@ -65,4 +68,5 @@
         }
     </script>
 </body>
+
 </html>
