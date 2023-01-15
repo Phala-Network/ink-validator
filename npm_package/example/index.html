@@ -20,8 +20,8 @@
         <label for="file-input">Choose a compiled contract:</label>
         <input type="file" id="file-input" onchange="validateFile()" />
         <br>
-        <label for="allow-indeterministic">Allow indeterministic:</label>
-        <input type="checkbox" id="allow-indeterministic" onchange="validateFile()" />
+        <label for="allow-indeterminism">Allow indeterminism:</label>
+        <input type="checkbox" id="allow-indeterminism" onchange="validateFile()" />
     </form>
 
     <div id="result"></div>
@@ -30,7 +30,7 @@
     <script>
         window.validateFile = function () {
             const file = document.getElementById('file-input').files[0];
-            const allowIndeterministic = document.getElementById("allow-indeterministic").checked;
+            const indeterministic = document.getElementById("allow-indeterminism").checked;
             const resultDiv = document.getElementById('result');
             if (!file) {
                 resultDiv.innerHTML = '';
@@ -51,7 +51,7 @@
                 } else {
                     wasmCode = new Uint8Array(reader.result);
                 }
-                const result = validateInk(wasmCode, allowIndeterministic);
+                const result = validateInk(wasmCode, indeterministic);
                 if (result) {
                     resultDiv.innerHTML = '<p>The contract is Invalid<br> ' + result + '</p>';
                     resultDiv.classList.add("invalid");

@@ -1,8 +1,8 @@
 import { validate, validateHex } from "@kvinwang/ink-validator";
-window.validateInk = function (code, allowIndeterministic) {
+window.validateInk = function (code, indeterministic) {
     if (typeof code === "string") {
-        return validateHex(code, allowIndeterministic);
+        return validateHex(code, indeterministic);
     } else {
-        return validate(code, allowIndeterministic);
+        return validate(code, indeterministic);
     }
 }
