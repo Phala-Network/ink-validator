@@ -29,8 +29,7 @@ fn load_wasm_bin(file: &str) -> Vec<u8> {
         let json = std::fs::read_to_string(file).expect("Failed to read contract file");
         let contract_info: Contract =
             serde_json::from_str(&json).expect("Failed to parse contract file");
-        let hexed_wasm = contract_info.source.wasm;
-        let hexed_wasm = hexed_wasm.strip_prefix("0x").unwrap_or(&hexed_wasm);
+        let hexed_wasm = contract_info.source.wasm.trim_start_matches("0x");
         hex::decode(hexed_wasm).expect("Failed to hex decode wasm")
     } else {
         panic!("Only .wasm and .contract files are supported");
