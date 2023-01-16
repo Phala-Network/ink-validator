@@ -1,4 +1,4 @@
-const { validate } = require("@kvinwang/ink-validator");
+const { validate } = require("@phala/ink-validator");
 const fs = require('fs');
 
 function validateFile(filename) {

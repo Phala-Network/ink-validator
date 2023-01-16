@@ -5,7 +5,7 @@ This npm package supply a function to validate given compiled WASM binary to be 
 ## Usage
 
 ```js
-const { validate } = require("@kvinwang/ink_validator");
+const { validate } = require("@phala/ink_validator");
 const fs = require('fs');
 
 const wasmBin = fs.readFileSync("qjs.wasm"); 

@@ -1,4 +1,4 @@
-import { validate, validateHex } from "@kvinwang/ink-validator";
+import { validate, validateHex } from "@phala/ink-validator";
 window.validateInk = function (code, indeterministic) {
     if (typeof code === "string") {
         return validateHex(code, indeterministic);

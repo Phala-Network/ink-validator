@@ -5,7 +5,7 @@ ink-validate is a command line tool to validate ink contracts.
 
 To install ink-validate, you can clone the repository and build the tool using cargo:
 ```bash
-git clone https://github.com/kvinwang/ink-validator.git
+git clone https://github.com/Phala-Network/ink-validator.git
 cd ink-validator/cli
 cargo install --path .
 ```
