@@ -21,7 +21,7 @@ To validate a contract called "contract.wasm" and allow indeterministic instruct
 ink-validate -i contract.wasm
 ```
 
-Or you can visit https://kvinwang.github.io/ink-validator/ to use the live version which is compiled to WASM.
+Or you can visit https://phala-network.github.io/ink-validator/ to use the live version which is compiled to WASM.
 
 ## License
 ink-validate is released under the MIT License.
