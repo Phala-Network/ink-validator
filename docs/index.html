@@ -62,7 +62,9 @@
                 }
                 const result = validateInk(wasmCode, indeterministic);
                 if (result) {
-                    resultDiv.innerHTML = '<p>The contract is Invalid<br> ' + result + '</p>';
+                    resultDiv.innerHTML = '<p>The contract is Invalid<br> ' + result +
+                        "<br><a href='https://wiki.phala.network/en-us/build/support/faq/#phat-ui-reports-an-error-before-deploying-the-contract'>How can I fix it?</a>"
+                        + '</p>';
                     resultDiv.classList.add("invalid");
                 } else {
                     resultDiv.innerHTML = '<p>The contract is Valid</p>';
